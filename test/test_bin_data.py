@@ -20,7 +20,7 @@ def net_result(net_input):
 
 
 def set_test_weights(l):
-    l.weights = [np.array([0.1, 0.1, 0.1]), np.array([0.5, 0.5, 0.5])]
+    l.weights = np.array([np.array([0.1, 0.1, 0.1]), np.array([0.5, 0.5, 0.5])])
 
 
 def test_training_data(net_input, net_result):
@@ -30,7 +30,15 @@ def test_training_data(net_input, net_result):
         assert net_input[i][-2:].any() == net_result[i]
 
 def test_layer(net_input, net_result):
-    l = Layer(3, 2)
-    set_test_weights(l)
+    l2 = Layer(3, 2)
+    set_test_weights(l2)
+    out = l2.forward(np.array([1.0, 1.0, 1.0]))
+    assert out == approx([l2.act(0.3), l2.act(1.5)])
+
+def test_layer_training(net_input, net_result):
+    l = Layer(3, 1)
+    for i in range(100):
+        for j in range(8):
+            l.teach(net_input[j], net_result[j])
     out = l.forward(np.array([1.0, 1.0, 1.0]))
-    assert out == approx([l.act(0.3), l.act(1.5)])
+    assert out == approx(1.0, abs=0.05)
