@@ -4,7 +4,7 @@ import sys
 
 
 def load_data():
-    data_set = np.loadtxt("..\\data\\mnist_test.csv", skiprows=1, dtype=np.uint8, delimiter=',')
+    data_set = np.loadtxt("..\\.data\\mnist_test.csv", skiprows=1, dtype=np.uint8, delimiter=',')
     return data_set
 
 
